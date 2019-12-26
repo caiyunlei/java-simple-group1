@@ -4,7 +4,7 @@ import com.wuhantoc.javasample.utils.UnitConventer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class UnitConventerTest {
+class UnitConventerTest {
 
   @Test
   // should_xxx_when_xxx_given_xxx
