@@ -9,16 +9,20 @@ public class Locker {
         emptyBoxes = boxes;
     }
 
-    public boolean store() {
+    public Ticket store() {
         if (havaEmptyBox()) {
             --emptyBoxes;
-            return true;
+            return new Ticket();
         } else {
-            return false;
+            return null;
         }
     }
 
     private boolean havaEmptyBox() {
         return emptyBoxes >= 1;
+    }
+
+    public boolean pick(Ticket correctTicket) {
+        return false;
     }
 }

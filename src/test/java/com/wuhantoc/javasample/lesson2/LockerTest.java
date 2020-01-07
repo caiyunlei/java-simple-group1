@@ -11,10 +11,10 @@ public class LockerTest {
         Locker locker = new Locker(0);
 
         // when
-        boolean successful = locker.store();
+        Ticket ticket = locker.store();
 
         // then
-        Assertions.assertFalse(successful);
+        Assertions.assertNull(ticket);
     }
 
     @Test
@@ -23,10 +23,10 @@ public class LockerTest {
         Locker locker = new Locker(1);
 
         // when
-        boolean successful = locker.store();
+        Ticket ticket = locker.store();
 
         // then
-        Assertions.assertTrue(successful);
+        Assertions.assertNotNull(ticket);
     }
 
     @Test
