@@ -83,6 +83,17 @@ public class LockerTest {
         Assertions.assertFalse(repeatPickResult);
     }
 
+    @Test
+    void should_success_when_store_package_given_pick_package_from_locker() {
+        // given
+        Locker locker = new Locker(1);
+        Ticket ticket = locker.store();
 
+        boolean pickResult = locker.pick(ticket);
+        Assertions.assertTrue(pickResult);
+
+        Ticket ticket1 = locker.store();
+        Assertions.assertNotNull(ticket1);
+    }
 
 }

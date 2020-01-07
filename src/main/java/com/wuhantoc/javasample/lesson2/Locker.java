@@ -31,6 +31,7 @@ public class Locker {
 
     public boolean pick(Ticket correctTicket) {
         if (validTickets.contains(correctTicket)) {
+            emptyBoxes++;
             return validTickets.remove(correctTicket);
         } else {
             return false;
