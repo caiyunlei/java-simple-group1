@@ -17,6 +17,21 @@ public class LockerTest {
     }
 
     @Test
+    void should_get_ticket_when_store_packages_given_all_full_box() {
+        // given
+        Locker locker = new Locker(2);
+
+        Ticket ticket1 = locker.store();
+        Assertions.assertNotNull(ticket1);
+
+        Ticket ticket2 = locker.store();
+        Assertions.assertNotNull(ticket2);
+
+        Ticket ticket3 = locker.store();
+        Assertions.assertNull(ticket3);
+    }
+
+    @Test
     void should_get_ticket_when_store_packages_given_have_empty_box() {
         // given
         Locker locker = new Locker(1);
