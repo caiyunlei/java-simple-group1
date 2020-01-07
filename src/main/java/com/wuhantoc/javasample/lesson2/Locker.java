@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.lesson2;
 
 public class Locker {
     int boxes = 0;

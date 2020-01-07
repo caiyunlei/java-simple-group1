@@ -1,6 +1,6 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.lesson2;
 
-import com.wuhantoc.javasample.Locker;
+import com.wuhantoc.javasample.lesson2.Locker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sun.security.krb5.internal.Ticket;
