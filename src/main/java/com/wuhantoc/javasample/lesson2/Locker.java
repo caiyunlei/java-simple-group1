@@ -30,6 +30,10 @@ public class Locker {
     }
 
     public boolean pick(Ticket correctTicket) {
-        return validTickets.contains(correctTicket);
+        if (validTickets.contains(correctTicket)) {
+            return validTickets.remove(correctTicket);
+        } else {
+            return false;
+        }
     }
 }

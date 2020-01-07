@@ -57,7 +57,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_get_package_when_pick_packages_given_have_wrong_ticket() {
+    void should_failed_when_pick_packages_given_have_wrong_ticket() {
         // given
         Locker locker = new Locker(1);
         locker.store();
@@ -69,5 +69,20 @@ public class LockerTest {
         // then
         Assertions.assertFalse(successful);
     }
+
+    @Test
+    void should_failed_when_pick_packages_given_used_ticket() {
+        // given
+        Locker locker = new Locker(1);
+        Ticket ticket = locker.store();
+
+        boolean pickResult = locker.pick(ticket);
+        Assertions.assertTrue(pickResult);
+
+        boolean repeatPickResult = locker.pick(ticket);
+        Assertions.assertFalse(repeatPickResult);
+    }
+
+
 
 }
