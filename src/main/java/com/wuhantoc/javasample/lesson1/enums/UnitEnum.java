@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample.enums;
+package com.wuhantoc.javasample.lesson1.enums;
 
 public enum  UnitEnum {
   YARD,

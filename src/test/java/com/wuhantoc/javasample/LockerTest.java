@@ -1,7 +1,6 @@
 package com.wuhantoc.javasample;
 
-import com.wuhantoc.javasample.enums.UnitEnum;
-import com.wuhantoc.javasample.utils.UnitConventer;
+import com.wuhantoc.javasample.Locker;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sun.security.krb5.internal.Ticket;

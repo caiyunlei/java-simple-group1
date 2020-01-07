@@ -1,6 +1,6 @@
-package com.wuhantoc.javasample.utils;
+package com.wuhantoc.javasample.lesson1.utils;
 
-import com.wuhantoc.javasample.enums.UnitEnum;
+import com.wuhantoc.javasample.lesson1.enums.UnitEnum;
 
 public class UnitConventer {
 

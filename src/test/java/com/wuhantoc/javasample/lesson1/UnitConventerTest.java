@@ -1,7 +1,7 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.lesson1;
 
-import com.wuhantoc.javasample.enums.UnitEnum;
-import com.wuhantoc.javasample.utils.UnitConventer;
+import com.wuhantoc.javasample.lesson1.enums.UnitEnum;
+import com.wuhantoc.javasample.lesson1.utils.UnitConventer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
