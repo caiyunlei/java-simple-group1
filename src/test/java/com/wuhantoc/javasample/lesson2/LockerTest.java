@@ -32,7 +32,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_get_ticket_when_store_packages_given_have_empty_box() {
+    void should_get_ticket_when_store_packages_given_empty_box() {
         // given
         Locker locker = new Locker(1);
 
@@ -44,7 +44,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_get_package_when_pick_packages_given_have_correct_ticket() {
+    void should_get_package_when_pick_packages_given_correct_ticket() {
         // given
         Locker locker = new Locker(1);
         Ticket correctTicket = locker.store();
@@ -57,7 +57,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_failed_when_pick_packages_given_have_wrong_ticket() {
+    void should_failed_when_pick_packages_given_wrong_ticket() {
         // given
         Locker locker = new Locker(1);
         locker.store();
@@ -72,7 +72,6 @@ public class LockerTest {
 
     @Test
     void should_failed_when_pick_packages_given_used_ticket() {
-        // given
         Locker locker = new Locker(1);
         Ticket ticket = locker.store();
 
@@ -85,7 +84,6 @@ public class LockerTest {
 
     @Test
     void should_success_when_store_package_given_pick_package_from_locker() {
-        // given
         Locker locker = new Locker(1);
         Ticket ticket = locker.store();
 
