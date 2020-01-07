@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Locker {
-    int boxes = 0;
+    int size = 0;
     int emptyBoxes = 0;
     List<Ticket> validTickets = new ArrayList<>();
 
     public Locker(int i) {
-        boxes = i;
-        emptyBoxes = boxes;
+        size = i;
+        emptyBoxes = size;
     }
 
     public Ticket store() {
