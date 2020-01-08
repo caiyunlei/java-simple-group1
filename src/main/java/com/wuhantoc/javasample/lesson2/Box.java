@@ -38,7 +38,7 @@ public class Box {
     this.somethingStored = somethingToStore;
   }
 
-  public Object getPackage() {
+  public Object popPackage() {
     return somethingStored;
   }
 }

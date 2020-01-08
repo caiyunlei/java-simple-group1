@@ -21,8 +21,9 @@ public class Robert {
     if (locker != null) {
       Ticket ticket = locker.pickTicket();
       try {
-        storePackageToBox();
-        locker.closeBox(ticket.getBoxId());
+        Box box = locker.findBoxById(ticket.getBoxId());
+        box.putPackage(somethingToStore);
+        box.close();
       } catch (Exception e) {
         //todo: give the bag to customer
         e.printStackTrace();
@@ -31,10 +32,6 @@ public class Robert {
       return ticket;
     }
     return null;
-  }
-
-  private void storePackageToBox() {
-    //todo:
   }
 
   private Locker findLockerHaveEmptyBox() {

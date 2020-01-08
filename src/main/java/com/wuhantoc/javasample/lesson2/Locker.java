@@ -42,7 +42,7 @@ public class Locker {
         }
     }
 
-    private Box findBoxById(int id) {
+    Box findBoxById(int id) {
         for (Box box : boxes) {
             if (box.getId() == id) {
                 return box;
