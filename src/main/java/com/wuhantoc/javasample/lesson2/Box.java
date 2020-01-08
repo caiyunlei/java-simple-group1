@@ -3,6 +3,15 @@ package com.wuhantoc.javasample.lesson2;
 public class Box {
   private boolean open = false;
   private boolean used = false;
+  private final int id;
+
+  public Box(int id) {
+    this.id = id;
+  }
+
+  public int getId() {
+    return id;
+  }
 
   public boolean isUsed() {
     return used;

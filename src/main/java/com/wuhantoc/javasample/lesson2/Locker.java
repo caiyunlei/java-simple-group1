@@ -5,24 +5,25 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Locker {
+    private int id;
     private Box[] boxes;
     private Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
 
     private Locker(int i) {
         boxes = new Box[i];
         for (int j = 0; j < i; j++) {
-            boxes[j] = new Box();
+            boxes[j] = new Box(j);
         }
     }
 
-    public static Locker allocateFixedSizeLocker(int i) {
+    public static Locker newFixedSizeLocker(int i) {
         return new Locker(i);
     }
 
     public Ticket pickTicket() {
         if (haveUnusedBox()) {
-            Ticket ticket = new Ticket(UUID.randomUUID());
             Box box = selectUnusedBox();
+            Ticket ticket = new Ticket(UUID.randomUUID(), box.getId());
             ticketBoxRelation.put(ticket, box);
             box.setUsed(true);
             box.open();
@@ -32,8 +33,22 @@ public class Locker {
         }
     }
 
-    public void closeBox(Box box) {
-        box.close();
+    public void closeBox(int id) throws Exception {
+        Box box = findBoxById(id);
+        if (box != null) {
+            box.close();
+        } else {
+            throw new Exception("can not find box by given box id:" + id);
+        }
+    }
+
+    private Box findBoxById(int id) {
+        for (Box box : boxes) {
+            if (box.getId() == id) {
+                return box;
+            }
+        }
+        return null;
     }
 
     private Box selectUnusedBox() {
@@ -57,7 +72,7 @@ public class Locker {
         }
     }
 
-    private boolean haveUnusedBox() {
+    boolean haveUnusedBox() {
         int unusedBoxesNum = 0;
         for (Box box : boxes) {
             if (!box.isUsed()) {

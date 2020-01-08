@@ -1,6 +1,6 @@
 package com.wuhantoc.javasample.lesson2;
 
-import static com.wuhantoc.javasample.lesson2.Locker.allocateFixedSizeLocker;
+import static com.wuhantoc.javasample.lesson2.Locker.newFixedSizeLocker;
 
 
 import java.util.UUID;
@@ -11,7 +11,7 @@ public class LockerTest {
     @Test
     void should_failed_when_store_package_given_0_boxes_locker() {
         // given
-        Locker locker = allocateFixedSizeLocker(0);
+        Locker locker = newFixedSizeLocker(0);
 
         // when
         Ticket ticket = locker.pickTicket();
@@ -23,7 +23,7 @@ public class LockerTest {
     @Test
     void should_get_ticket_when_store_package_given_have_empty_box_locker() {
         // given
-        Locker locker = allocateFixedSizeLocker(1);
+        Locker locker = newFixedSizeLocker(1);
 
         // when
         Ticket ticket = locker.pickTicket();
@@ -35,7 +35,7 @@ public class LockerTest {
     @Test
     void should_failed_when_store_package_given_all_full_box_locker() {
         // given
-        Locker locker = allocateFixedSizeLocker(2);
+        Locker locker = newFixedSizeLocker(2);
         locker.pickTicket();
         locker.pickTicket();
 
@@ -49,7 +49,7 @@ public class LockerTest {
     @Test
     void should_get_package_when_pick_given_correct_ticket() {
         // given
-        Locker locker = allocateFixedSizeLocker(1);
+        Locker locker = newFixedSizeLocker(1);
         Ticket correctTicket = locker.pickTicket();
 
         // when
@@ -63,11 +63,11 @@ public class LockerTest {
     @Test
     void should_failed_when_pick_given_wrong_ticket() {
         // given
-        Locker locker = allocateFixedSizeLocker(1);
+        Locker locker = newFixedSizeLocker(1);
         locker.pickTicket();
 
         // when
-        Ticket wrongTicket = new Ticket(UUID.randomUUID());
+        Ticket wrongTicket = new Ticket(UUID.randomUUID(), 0);
         Box nullBox = locker.openBox(wrongTicket);
 
         // then
@@ -77,7 +77,7 @@ public class LockerTest {
     @Test
     void should_failed_when_pick_given_used_ticket() {
         //given
-        Locker locker = allocateFixedSizeLocker(1);
+        Locker locker = newFixedSizeLocker(1);
         Ticket ticket = locker.pickTicket();
         locker.openBox(ticket);
 
@@ -91,7 +91,7 @@ public class LockerTest {
     @Test
     void should_success_when_store_after_pick_given_locker() {
         //given
-        Locker locker = allocateFixedSizeLocker(1);
+        Locker locker = newFixedSizeLocker(1);
         Ticket ticket = locker.pickTicket();
         locker.openBox(ticket);
 
