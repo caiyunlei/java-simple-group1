@@ -1,44 +1,69 @@
 package com.wuhantoc.javasample.lesson2;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class Locker {
-    int size = 0;
-    int emptyBoxesNum = 0;
-    List<Ticket> validTickets = new ArrayList<>();
-    Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
+    private Box[] boxes;
+    private Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
 
-    public Locker(int i) {
-        size = i;
-        emptyBoxesNum = size;
+    private Locker(int i) {
+        boxes = new Box[i];
+        for (int j = 0; j < i; j++) {
+            boxes[j] = new Box();
+        }
     }
 
-    public Ticket store() {
-        if (haveEmptyBox()) {
-            --emptyBoxesNum;
+    public static Locker allocateFixedSizeLocker(int i) {
+        return new Locker(i);
+    }
 
-            final Ticket ticket = new Ticket(UUID.randomUUID());
-            validTickets.add(ticket);
+    public Ticket pickTicket() {
+        if (haveUnusedBox()) {
+            Ticket ticket = new Ticket(UUID.randomUUID());
+            Box box = selectUnusedBox();
+            ticketBoxRelation.put(ticket, box);
+            box.setUsed(true);
+            box.open();
             return ticket;
         } else {
             return null;
         }
     }
 
-    public boolean pick(Ticket correctTicket) {
-        if (validTickets.contains(correctTicket)) {
-            emptyBoxesNum++;
-            return validTickets.remove(correctTicket);
+    public void closeBox(Box box) {
+        box.close();
+    }
+
+    private Box selectUnusedBox() {
+        for (Box box : boxes) {
+            if (!box.isUsed()) {
+                return box;
+            }
+        }
+        return null;
+    }
+
+    public Box openBox(Ticket ticket) {
+        if (ticketBoxRelation.containsKey(ticket)) {
+            final Box box = ticketBoxRelation.get(ticket);
+            ticketBoxRelation.remove(ticket);
+            box.setUsed(false);
+            box.open();
+            return box;
         } else {
-            return false;
+            return null;
         }
     }
 
-    private boolean haveEmptyBox() {
-        return emptyBoxesNum >= 1;
+    private boolean haveUnusedBox() {
+        int unusedBoxesNum = 0;
+        for (Box box : boxes) {
+            if (!box.isUsed()) {
+                unusedBoxesNum++;
+            }
+        }
+        return unusedBoxesNum >= 1;
     }
 }

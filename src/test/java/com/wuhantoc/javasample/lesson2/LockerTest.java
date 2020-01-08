@@ -1,5 +1,8 @@
 package com.wuhantoc.javasample.lesson2;
 
+import static com.wuhantoc.javasample.lesson2.Locker.allocateFixedSizeLocker;
+
+
 import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,10 +11,10 @@ public class LockerTest {
     @Test
     void should_failed_when_store_package_given_0_boxes_locker() {
         // given
-        Locker locker = new Locker(0);
+        Locker locker = allocateFixedSizeLocker(0);
 
         // when
-        Ticket ticket = locker.store();
+        Ticket ticket = locker.pickTicket();
 
         // then
         Assertions.assertNull(ticket);
@@ -20,10 +23,10 @@ public class LockerTest {
     @Test
     void should_get_ticket_when_store_package_given_have_empty_box_locker() {
         // given
-        Locker locker = new Locker(1);
+        Locker locker = allocateFixedSizeLocker(1);
 
         // when
-        Ticket ticket = locker.store();
+        Ticket ticket = locker.pickTicket();
 
         // then
         Assertions.assertNotNull(ticket);
@@ -32,12 +35,12 @@ public class LockerTest {
     @Test
     void should_failed_when_store_package_given_all_full_box_locker() {
         // given
-        Locker locker = new Locker(2);
-        locker.store();
-        locker.store();
+        Locker locker = allocateFixedSizeLocker(2);
+        locker.pickTicket();
+        locker.pickTicket();
 
         //when
-        Ticket ticket3 = locker.store();
+        Ticket ticket3 = locker.pickTicket();
 
         //then
         Assertions.assertNull(ticket3);
@@ -46,53 +49,54 @@ public class LockerTest {
     @Test
     void should_get_package_when_pick_given_correct_ticket() {
         // given
-        Locker locker = new Locker(1);
-        Ticket correctTicket = locker.store();
+        Locker locker = allocateFixedSizeLocker(1);
+        Ticket correctTicket = locker.pickTicket();
 
         // when
-        boolean successful = locker.pick(correctTicket);
+        Box openedBox = locker.openBox(correctTicket);
 
         // then
-        Assertions.assertTrue(successful);
+        Assertions.assertFalse(openedBox.isUsed());
+        Assertions.assertTrue(openedBox.isOpen());
     }
 
     @Test
     void should_failed_when_pick_given_wrong_ticket() {
         // given
-        Locker locker = new Locker(1);
-        locker.store();
+        Locker locker = allocateFixedSizeLocker(1);
+        locker.pickTicket();
 
         // when
         Ticket wrongTicket = new Ticket(UUID.randomUUID());
-        boolean pickResult = locker.pick(wrongTicket);
+        Box nullBox = locker.openBox(wrongTicket);
 
         // then
-        Assertions.assertFalse(pickResult);
+        Assertions.assertNull(nullBox);
     }
 
     @Test
     void should_failed_when_pick_given_used_ticket() {
         //given
-        Locker locker = new Locker(1);
-        Ticket ticket = locker.store();
-        locker.pick(ticket);
+        Locker locker = allocateFixedSizeLocker(1);
+        Ticket ticket = locker.pickTicket();
+        locker.openBox(ticket);
 
         //when
-        boolean repeatPickResult = locker.pick(ticket);
+        Box nullBox = locker.openBox(ticket);
 
         //then
-        Assertions.assertFalse(repeatPickResult);
+        Assertions.assertNull(nullBox);
     }
 
     @Test
     void should_success_when_store_after_pick_given_locker() {
         //given
-        Locker locker = new Locker(1);
-        Ticket ticket = locker.store();
-        locker.pick(ticket);
+        Locker locker = allocateFixedSizeLocker(1);
+        Ticket ticket = locker.pickTicket();
+        locker.openBox(ticket);
 
         //when
-        Ticket ticket1 = locker.store();
+        Ticket ticket1 = locker.pickTicket();
 
         //then
         Assertions.assertNotNull(ticket1);
