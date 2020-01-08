@@ -1,5 +1,6 @@
 package com.wuhantoc.javasample.lesson2;
 
+import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -62,7 +63,7 @@ public class LockerTest {
         locker.store();
 
         // when
-        Ticket wrongTicket = new Ticket();
+        Ticket wrongTicket = new Ticket(UUID.randomUUID());
         boolean pickResult = locker.pick(wrongTicket);
 
         // then
