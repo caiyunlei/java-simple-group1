@@ -4,6 +4,7 @@ public class Box {
   private boolean open = false;
   private boolean used = false;
   private final int id;
+  private Object somethingStored;
 
   public Box(int id) {
     this.id = id;
@@ -31,5 +32,13 @@ public class Box {
 
   public void close() {
     this.open = false;
+  }
+
+  public void putPackage(Object somethingToStore) {
+    this.somethingStored = somethingToStore;
+  }
+
+  public Object getPackage() {
+    return somethingStored;
   }
 }
