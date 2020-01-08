@@ -46,15 +46,10 @@ public class Robert {
   public Object pickPackage(Ticket ticket) {
     for (Locker underControlLocker : underControlLockers) {
       Box box = underControlLocker.openBox(ticket);
-      if (box != null && box.isOpen() && box.isUsed()) {
-         return getPackageFromBox();
+      if (box != null) {
+        return box.popPackage();
       }
     }
-    return null;
-  }
-
-  private Object getPackageFromBox() {
-
     return null;
   }
 }

@@ -33,15 +33,6 @@ public class Locker {
         }
     }
 
-    public void closeBox(int id) throws Exception {
-        Box box = findBoxById(id);
-        if (box != null) {
-            box.close();
-        } else {
-            throw new Exception("can not find box by given box id:" + id);
-        }
-    }
-
     Box findBoxById(int id) {
         for (Box box : boxes) {
             if (box.getId() == id) {

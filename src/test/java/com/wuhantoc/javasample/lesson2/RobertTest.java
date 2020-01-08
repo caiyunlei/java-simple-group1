@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class RobertTest {
@@ -69,7 +69,17 @@ class RobertTest {
 
   @Test
   void should_failed_when_pick_given_wrong_ticket() {
-    throw new RuntimeException();
+    //given
+    Robert robert = new Robert();
+    robert.connectLocker(Locker.newFixedSizeLocker(1));
+    robert.pickTicket(new Object());
+    Ticket wrongTicker = new Ticket(UUID.randomUUID(),0);
+
+    //when
+    Object returnPackage = robert.pickPackage(wrongTicker);
+
+    //then
+    assertNull(returnPackage);
   }
 
 }
