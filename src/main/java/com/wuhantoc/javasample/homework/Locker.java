@@ -1,17 +1,19 @@
 package com.wuhantoc.javasample.homework;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class Locker {
-    private final Box[] boxes;
+    private final List<Box> boxes;
     private final Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
 
     private Locker(int size) {
-        boxes = new Box[size];
+        boxes = new ArrayList<>();
         for (int j = 0; j < size; j++) {
-            boxes[j] = new Box(j);
+            boxes.add(new Box(j));
         }
     }
 
@@ -20,7 +22,7 @@ public class Locker {
     }
 
     public Ticket pickTicket() {
-        Box box = selectUsableBox();
+        Box box = selectUnusedBox();
         if (box != null) {
             Ticket ticket = new Ticket(UUID.randomUUID(), box.getId());
             ticketBoxRelation.put(ticket, box);
@@ -43,28 +45,18 @@ public class Locker {
     }
 
     Box findBoxById(int id) {
-        for (Box box : boxes) {
-            if (box.getId() == id) {
-                return box;
-            }
-        }
-        return null;
+        return boxes.stream().filter(box -> box.getId() == id).findFirst().orElse(null);
     }
 
     boolean haveUnusedBox() {
-        return ticketBoxRelation.size() < boxes.length;
+        return ticketBoxRelation.size() < boxes.size();
     }
 
-    private boolean checkBoxUsability(Box box) {
-        return ticketBoxRelation.containsValue(box);
+    private boolean checkBoxUnuse(Box box) {
+        return !ticketBoxRelation.containsValue(box);
     }
 
-    private Box selectUsableBox() {
-        for (Box box : boxes) {
-            if (!checkBoxUsability(box)) {
-                return box;
-            }
-        }
-        return null;
+    private Box selectUnusedBox() {
+        return boxes.stream().filter(this::checkBoxUnuse).findFirst().orElse(null);
     }
 }
