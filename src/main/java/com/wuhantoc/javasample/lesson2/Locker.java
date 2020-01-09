@@ -50,7 +50,6 @@ public class Locker {
         return null;
     }
 
-    //todo:need to modify
     public Box openBox(Ticket ticket) {
         if (ticketBoxRelation.containsKey(ticket)) {
             final Box box = ticketBoxRelation.get(ticket);
