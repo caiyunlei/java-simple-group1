@@ -2,7 +2,6 @@ package com.wuhantoc.javasample.lesson2;
 
 public class Box {
   private boolean open = false;
-  private boolean used = false;
   private final int id;
   private Object somethingStored;
 
@@ -12,14 +11,6 @@ public class Box {
 
   public int getId() {
     return id;
-  }
-
-  public boolean isUsed() {
-    return used;
-  }
-
-  public void setUsed(boolean used) {
-    this.used = used;
   }
 
   public boolean isOpen() {
@@ -34,11 +25,13 @@ public class Box {
     this.open = false;
   }
 
-  public void setSomethingStored(Object somethingToStore) {
+  public void putSomething(Object somethingToStore) {
     this.somethingStored = somethingToStore;
   }
 
-  public Object getSomethingStored() {
-    return somethingStored;
+  public Object popStoredThing() {
+    Object storedThing = somethingStored;
+    somethingStored = null;
+    return storedThing;
   }
 }

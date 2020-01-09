@@ -91,15 +91,15 @@ class RobertTest {
     //given
     Robert robert = new Robert();
     robert.connectLocker(Locker.newFixedSizeLocker(1));
-    final Locker locker = Locker.newFixedSizeLocker(1);
-    robert.connectLocker(locker);
+    final Locker locker2 = Locker.newFixedSizeLocker(1);
+    robert.connectLocker(locker2);
 
     //when
     final Object somethingToStore = new Object();
     Ticket ticket = robert.pickTicket(somethingToStore);
 
     //then
-    Box box = locker.openBox(ticket);
+    Box box = locker2.openBox(ticket);
     assertNull(box);
   }
 }

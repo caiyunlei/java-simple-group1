@@ -21,11 +21,10 @@ public class Locker {
     }
 
     public Ticket pickTicket() {
-        if (haveUnusedBox()) {
-            Box box = selectUnusedBox();
+        Box box = selectUnusedBox();
+        if (box != null) {
             Ticket ticket = new Ticket(UUID.randomUUID(), box.getId());
             ticketBoxRelation.put(ticket, box);
-            box.setUsed(true);
             box.open();
             return ticket;
         } else {
@@ -44,18 +43,18 @@ public class Locker {
 
     private Box selectUnusedBox() {
         for (Box box : boxes) {
-            if (!box.isUsed()) {
+            if (!checkBoxUsage(box)) {
                 return box;
             }
         }
         return null;
     }
 
+    //todo:need to modify
     public Box openBox(Ticket ticket) {
         if (ticketBoxRelation.containsKey(ticket)) {
             final Box box = ticketBoxRelation.get(ticket);
             ticketBoxRelation.remove(ticket);
-            box.setUsed(false);
             box.open();
             return box;
         } else {
@@ -63,13 +62,11 @@ public class Locker {
         }
     }
 
+    private boolean checkBoxUsage(Box box) {
+        return ticketBoxRelation.containsValue(box);
+    }
+
     boolean haveUnusedBox() {
-        int unusedBoxesNum = 0;
-        for (Box box : boxes) {
-            if (!box.isUsed()) {
-                unusedBoxesNum++;
-            }
-        }
-        return unusedBoxesNum >= 1;
+        return ticketBoxRelation.size() < boxes.length;
     }
 }

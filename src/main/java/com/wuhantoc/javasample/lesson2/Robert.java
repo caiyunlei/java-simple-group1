@@ -20,15 +20,9 @@ public class Robert {
     Locker locker = findLockerHaveEmptyBox();
     if (locker != null) {
       Ticket ticket = locker.pickTicket();
-      try {
-        Box box = locker.findBoxById(ticket.getBoxId());
-        box.setSomethingStored(somethingToStore);
-        box.close();
-      } catch (Exception e) {
-        //todo: give the bag to customer
-        e.printStackTrace();
-        return null;
-      }
+      Box box = locker.findBoxById(ticket.getBoxId());
+      box.putSomething(somethingToStore);
+      box.close();
       return ticket;
     }
     return null;
@@ -47,7 +41,7 @@ public class Robert {
     for (Locker controlledLocker : controlledLockers) {
       Box box = controlledLocker.openBox(ticket);
       if (box != null) {
-        return box.getSomethingStored();
+        return box.popStoredThing();
       }
     }
     return null;

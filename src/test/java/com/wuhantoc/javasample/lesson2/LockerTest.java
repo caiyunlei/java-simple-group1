@@ -56,24 +56,23 @@ public class LockerTest {
     Box openedBox = locker.openBox(correctTicket);
 
     // then
-    Assertions.assertFalse(openedBox.isUsed());
     Assertions.assertTrue(openedBox.isOpen());
   }
 
   @Test
-  void should_get_package_when_pick_given_correct_ticket() {
+  void should_get_correct_package_when_pick_given_correct_ticket() {
     // given
     Locker locker = newFixedSizeLocker(1);
     Ticket correctTicket = locker.pickTicket();
     Box box = locker.findBoxById(correctTicket.getBoxId());
     Object somethinsToStore = new Object();
-    box.setSomethingStored(somethinsToStore);
+    box.putSomething(somethinsToStore);
 
     // when
     Box openedBox = locker.openBox(correctTicket);
 
     // then
-    Assertions.assertEquals(somethinsToStore, openedBox.getSomethingStored());
+    Assertions.assertEquals(somethinsToStore, openedBox.popStoredThing());
   }
 
   @Test
