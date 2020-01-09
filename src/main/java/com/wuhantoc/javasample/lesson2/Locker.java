@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Locker {
-    private int id;
     private Box[] boxes;
     private Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
 
