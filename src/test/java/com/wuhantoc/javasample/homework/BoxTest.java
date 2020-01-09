@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample.lesson2;
+package com.wuhantoc.javasample.homework;
 
 
 import org.junit.jupiter.api.Assertions;

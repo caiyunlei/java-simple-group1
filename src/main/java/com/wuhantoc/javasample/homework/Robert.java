@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample.lesson2;
+package com.wuhantoc.javasample.homework;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

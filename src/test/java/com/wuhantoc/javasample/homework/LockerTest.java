@@ -1,6 +1,6 @@
-package com.wuhantoc.javasample.lesson2;
+package com.wuhantoc.javasample.homework;
 
-import static com.wuhantoc.javasample.lesson2.Locker.newFixedSizeLocker;
+import static com.wuhantoc.javasample.homework.Locker.newFixedSizeLocker;
 
 
 import java.util.UUID;
