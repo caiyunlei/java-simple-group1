@@ -39,11 +39,6 @@ public class Robert {
   }
 
   private Locker findLockerHaveUnusedBox() {
-    for (Locker controlledLocker : controlledLockers) {
-      if (controlledLocker.haveUnusedBox()) {
-        return controlledLocker;
-      }
-    }
-    return null;
+    return controlledLockers.stream().filter(Locker::haveUnusedBox).findFirst().orElse(null);
   }
 }
