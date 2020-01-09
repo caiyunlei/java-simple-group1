@@ -1,18 +1,18 @@
 package com.wuhantoc.javasample.lesson2;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class Robert {
-  private Set<Locker> underControlLockers = new HashSet<>();
+  private Set<Locker> controlledLockers = new LinkedHashSet<>();
 
   public void connectLocker(Locker newLocker) {
-    this.underControlLockers.add(newLocker);
+    this.controlledLockers.add(newLocker);
   }
 
   public void disconnectLocker(Locker connectedLocker) {
-    if (underControlLockers.contains(connectedLocker)) {
-      this.underControlLockers.remove(connectedLocker);
+    if (controlledLockers.contains(connectedLocker)) {
+      this.controlledLockers.remove(connectedLocker);
     }
   }
 
@@ -22,7 +22,7 @@ public class Robert {
       Ticket ticket = locker.pickTicket();
       try {
         Box box = locker.findBoxById(ticket.getBoxId());
-        box.putPackage(somethingToStore);
+        box.setSomethingStored(somethingToStore);
         box.close();
       } catch (Exception e) {
         //todo: give the bag to customer
@@ -35,19 +35,19 @@ public class Robert {
   }
 
   private Locker findLockerHaveEmptyBox() {
-    for (Locker underControlLocker : underControlLockers) {
-      if (underControlLocker.haveUnusedBox()) {
-        return underControlLocker;
+    for (Locker controlledLocker : controlledLockers) {
+      if (controlledLocker.haveUnusedBox()) {
+        return controlledLocker;
       }
     }
     return null;
   }
 
   public Object pickPackage(Ticket ticket) {
-    for (Locker underControlLocker : underControlLockers) {
-      Box box = underControlLocker.openBox(ticket);
+    for (Locker controlledLocker : controlledLockers) {
+      Box box = controlledLocker.openBox(ticket);
       if (box != null) {
-        return box.popPackage();
+        return box.getSomethingStored();
       }
     }
     return null;

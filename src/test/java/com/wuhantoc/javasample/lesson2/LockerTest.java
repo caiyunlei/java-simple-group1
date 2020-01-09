@@ -67,13 +67,13 @@ public class LockerTest {
     Ticket correctTicket = locker.pickTicket();
     Box box = locker.findBoxById(correctTicket.getBoxId());
     Object somethinsToStore = new Object();
-    box.putPackage(somethinsToStore);
+    box.setSomethingStored(somethinsToStore);
 
     // when
     Box openedBox = locker.openBox(correctTicket);
 
     // then
-    Assertions.assertEquals(somethinsToStore, openedBox.popPackage());
+    Assertions.assertEquals(somethinsToStore, openedBox.getSomethingStored());
   }
 
   @Test

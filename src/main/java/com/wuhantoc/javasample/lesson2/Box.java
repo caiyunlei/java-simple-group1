@@ -34,11 +34,11 @@ public class Box {
     this.open = false;
   }
 
-  public void putPackage(Object somethingToStore) {
+  public void setSomethingStored(Object somethingToStore) {
     this.somethingStored = somethingToStore;
   }
 
-  public Object popPackage() {
+  public Object getSomethingStored() {
     return somethingStored;
   }
 }

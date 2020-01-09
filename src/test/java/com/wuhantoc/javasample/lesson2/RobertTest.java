@@ -38,20 +38,6 @@ class RobertTest {
     assertNull(ticket);
   }
 
-//  @Test
-//  void should_locker1_when_store_given_empty_locker1_and_empty_locker2() {
-//    //given
-//    Robert robert = new Robert();
-//    robert.connectLocker(Locker.newFixedSizeLocker(1));
-//    robert.connectLocker(Locker.newFixedSizeLocker(1));
-//
-//    //when
-//    Ticket ticket = robert.pickTicket(new Object());
-//
-//    //then
-//    assertEquals(ticket.getLockerId(),0);
-//  }
-
   @Test
   void should_success_when_pick_given_correct_ticket() {
     //given
@@ -82,4 +68,38 @@ class RobertTest {
     assertNull(returnPackage);
   }
 
+
+  @Test
+  void should_store_to_locker1_when_store_given_empty_locker1_and_empty_locker2() {
+    //given
+    Robert robert = new Robert();
+    final Locker locker1 = Locker.newFixedSizeLocker(1);
+    robert.connectLocker(locker1);
+    robert.connectLocker(Locker.newFixedSizeLocker(1));
+
+    //when
+    final Object somethingToStore = new Object();
+    Ticket ticket = robert.pickTicket(somethingToStore);
+
+    //then
+    Box box = locker1.openBox(ticket);
+    assertNotNull(box);
+  }
+
+  @Test
+  void should_not_store_to_locker2_when_store_given_empty_locker1_and_empty_locker2() {
+    //given
+    Robert robert = new Robert();
+    robert.connectLocker(Locker.newFixedSizeLocker(1));
+    final Locker locker = Locker.newFixedSizeLocker(1);
+    robert.connectLocker(locker);
+
+    //when
+    final Object somethingToStore = new Object();
+    Ticket ticket = robert.pickTicket(somethingToStore);
+
+    //then
+    Box box = locker.openBox(ticket);
+    assertNull(box);
+  }
 }
