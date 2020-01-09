@@ -17,7 +17,7 @@ public class Robert {
   }
 
   public Ticket pickTicket(Object somethingToStore){
-    Locker locker = findLockerHaveEmptyBox();
+    Locker locker = findLockerHaveUnusedBox();
     if (locker != null) {
       Ticket ticket = locker.pickTicket();
       Box box = locker.findBoxById(ticket.getBoxId());
@@ -28,7 +28,7 @@ public class Robert {
     return null;
   }
 
-  private Locker findLockerHaveEmptyBox() {
+  private Locker findLockerHaveUnusedBox() {
     for (Locker controlledLocker : controlledLockers) {
       if (controlledLocker.haveUnusedBox()) {
         return controlledLocker;

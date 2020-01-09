@@ -8,19 +8,19 @@ public class Locker {
     private Box[] boxes;
     private Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
 
-    private Locker(int i) {
-        boxes = new Box[i];
-        for (int j = 0; j < i; j++) {
+    private Locker(int size) {
+        boxes = new Box[size];
+        for (int j = 0; j < size; j++) {
             boxes[j] = new Box(j);
         }
     }
 
-    public static Locker newFixedSizeLocker(int i) {
-        return new Locker(i);
+    public static Locker newFixedSizeLocker(int size) {
+        return new Locker(size);
     }
 
     public Ticket pickTicket() {
-        Box box = selectUnusedBox();
+        Box box = selectUsableBox();
         if (box != null) {
             Ticket ticket = new Ticket(UUID.randomUUID(), box.getId());
             ticketBoxRelation.put(ticket, box);
@@ -40,9 +40,9 @@ public class Locker {
         return null;
     }
 
-    private Box selectUnusedBox() {
+    private Box selectUsableBox() {
         for (Box box : boxes) {
-            if (!checkBoxUsage(box)) {
+            if (!checkBoxUsability(box)) {
                 return box;
             }
         }
@@ -60,7 +60,7 @@ public class Locker {
         }
     }
 
-    private boolean checkBoxUsage(Box box) {
+    private boolean checkBoxUsability(Box box) {
         return ticketBoxRelation.containsValue(box);
     }
 
