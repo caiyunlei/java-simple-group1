@@ -28,20 +28,20 @@ public class Robert {
     return null;
   }
 
-  private Locker findLockerHaveUnusedBox() {
-    for (Locker controlledLocker : controlledLockers) {
-      if (controlledLocker.haveUnusedBox()) {
-        return controlledLocker;
-      }
-    }
-    return null;
-  }
-
   public Object pickPackage(Ticket ticket) {
     for (Locker controlledLocker : controlledLockers) {
       Box box = controlledLocker.openBox(ticket);
       if (box != null) {
         return box.popStoredThing();
+      }
+    }
+    return null;
+  }
+
+  private Locker findLockerHaveUnusedBox() {
+    for (Locker controlledLocker : controlledLockers) {
+      if (controlledLocker.haveUnusedBox()) {
+        return controlledLocker;
       }
     }
     return null;

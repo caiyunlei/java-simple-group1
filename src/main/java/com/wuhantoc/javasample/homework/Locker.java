@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Locker {
-    private Box[] boxes;
-    private Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
+    private final Box[] boxes;
+    private final Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
 
     private Locker(int size) {
         boxes = new Box[size];
@@ -31,24 +31,6 @@ public class Locker {
         }
     }
 
-    Box findBoxById(int id) {
-        for (Box box : boxes) {
-            if (box.getId() == id) {
-                return box;
-            }
-        }
-        return null;
-    }
-
-    private Box selectUsableBox() {
-        for (Box box : boxes) {
-            if (!checkBoxUsability(box)) {
-                return box;
-            }
-        }
-        return null;
-    }
-
     public Box openBox(Ticket ticket) {
         if (ticketBoxRelation.containsKey(ticket)) {
             final Box box = ticketBoxRelation.get(ticket);
@@ -60,11 +42,29 @@ public class Locker {
         }
     }
 
-    private boolean checkBoxUsability(Box box) {
-        return ticketBoxRelation.containsValue(box);
+    Box findBoxById(int id) {
+        for (Box box : boxes) {
+            if (box.getId() == id) {
+                return box;
+            }
+        }
+        return null;
     }
 
     boolean haveUnusedBox() {
         return ticketBoxRelation.size() < boxes.length;
+    }
+
+    private boolean checkBoxUsability(Box box) {
+        return ticketBoxRelation.containsValue(box);
+    }
+
+    private Box selectUsableBox() {
+        for (Box box : boxes) {
+            if (!checkBoxUsability(box)) {
+                return box;
+            }
+        }
+        return null;
     }
 }
