@@ -1,17 +1,27 @@
 package com.wuhantoc.javasample.homework.robot;
 
-import com.wuhantoc.javasample.homework.Bag;
-import com.wuhantoc.javasample.homework.Ticket;
+import com.wuhantoc.javasample.homework.Locker;
 
 public class FairRobot extends AbstractRobot {
 
   @Override
-  public Ticket pickTicket(Bag somethingToStore) {
-    return null;
+  protected Locker findLockerToSave() {
+    return findLowestUsageLocker();
   }
 
-  @Override
-  public Bag pickPackage(Ticket ticket) {
-    return null;
+  private Locker findLowestUsageLocker() {
+    return controlledLockers.stream()
+        .filter(Locker::haveUnusedBox)
+        .min(FairRobot::compare)
+        .orElse(null);
+  }
+
+
+  private static int compare(Locker locker1, Locker locker2) {
+    if (locker1.getUsageRatio() >= locker2.getUsageRatio()) {
+      return -1;
+    } else {
+      return 1;
+    }
   }
 }

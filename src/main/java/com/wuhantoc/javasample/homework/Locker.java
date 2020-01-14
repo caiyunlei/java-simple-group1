@@ -58,4 +58,10 @@ public class Locker {
     private Box selectUnusedBox() {
         return boxes.stream().filter(this::checkBoxUnused).findFirst().orElse(null);
     }
+
+    public double getUsageRatio() {
+        long totalSize = boxes.size();
+        long unusedBoxSize = boxes.stream().filter(this::checkBoxUnused).count();
+        return (totalSize - unusedBoxSize)/totalSize;
+    }
 }

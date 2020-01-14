@@ -26,7 +26,12 @@ class FairRobotTest {
     //then
     final Box box = emptyLocker.openBox(ticket);
     final Bag storedThing = box.popStoredThing();
-    Assertions.assertEquals(somethingToStore, somethingToStore);
+    Assertions.assertEquals(somethingToStore, storedThing);
+
+    Box openBox = halfUsageLocker.openBox(ticket);
+    Assertions.assertNull(openBox);
   }
+
+
 
 }
