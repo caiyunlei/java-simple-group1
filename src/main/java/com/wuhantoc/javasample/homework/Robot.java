@@ -3,19 +3,22 @@ package com.wuhantoc.javasample.homework;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Robot {
+public class Robot implements LockerRobot {
   private Set<Locker> controlledLockers = new LinkedHashSet<>();
 
+  @Override
   public void connectLocker(Locker newLocker) {
     this.controlledLockers.add(newLocker);
   }
 
+  @Override
   public void disconnectLocker(Locker connectedLocker) {
     if (controlledLockers.contains(connectedLocker)) {
       this.controlledLockers.remove(connectedLocker);
     }
   }
 
+  @Override
   public Ticket pickTicket(Object somethingToStore){
     Locker locker = findLockerHaveUnusedBox();
     if (locker != null) {
@@ -28,6 +31,7 @@ public class Robot {
     return null;
   }
 
+  @Override
   public Object pickPackage(Ticket ticket) {
     for (Locker controlledLocker : controlledLockers) {
       Box box = controlledLocker.openBox(ticket);
