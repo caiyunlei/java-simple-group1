@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public class Locker {
     private final List<Box> boxes;
-    private final Map<Ticket, Box> ticketBoxRelation = new HashMap<>();
+    private final Map<Ticket, Box> ticketBoxMap = new HashMap<>();
 
     private Locker(int size) {
         boxes = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Locker {
         Box box = selectUnusedBox();
         if (box != null) {
             Ticket ticket = new Ticket(UUID.randomUUID(), box.getId());
-            ticketBoxRelation.put(ticket, box);
+            ticketBoxMap.put(ticket, box);
             box.open();
             return ticket;
         } else {
@@ -34,9 +34,9 @@ public class Locker {
     }
 
     public Box openBox(Ticket ticket) {
-        if (ticketBoxRelation.containsKey(ticket)) {
-            final Box box = ticketBoxRelation.get(ticket);
-            ticketBoxRelation.remove(ticket);
+        if (ticketBoxMap.containsKey(ticket)) {
+            final Box box = ticketBoxMap.get(ticket);
+            ticketBoxMap.remove(ticket);
             box.open();
             return box;
         } else {
@@ -49,11 +49,11 @@ public class Locker {
     }
 
     boolean haveUnusedBox() {
-        return ticketBoxRelation.size() < boxes.size();
+        return ticketBoxMap.size() < boxes.size();
     }
 
     private boolean checkBoxUnuse(Box box) {
-        return !ticketBoxRelation.containsValue(box);
+        return !ticketBoxMap.containsValue(box);
     }
 
     private Box selectUnusedBox() {
