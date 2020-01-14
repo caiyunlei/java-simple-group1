@@ -76,22 +76,6 @@ class RobotTest {
     Robot robot = new Robot();
     final Locker locker1 = Locker.newFixedSizeLocker(1);
     robot.connectLocker(locker1);
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
-
-    //when
-    final Object somethingToStore = new Object();
-    Ticket ticket = robot.pickTicket(somethingToStore);
-
-    //then
-    Box box = locker1.openBox(ticket);
-    assertNotNull(box);
-  }
-
-  @Test
-  void should_not_store_to_locker2_when_store_given_empty_locker1_and_empty_locker2() {
-    //given
-    Robot robot = new Robot();
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
     final Locker locker2 = Locker.newFixedSizeLocker(1);
     robot.connectLocker(locker2);
 
@@ -100,7 +84,10 @@ class RobotTest {
     Ticket ticket = robot.pickTicket(somethingToStore);
 
     //then
-    Box box = locker2.openBox(ticket);
-    assertNull(box);
+    Box box1 = locker1.openBox(ticket);
+    assertNotNull(box1);
+
+    Box box2 = locker2.openBox(ticket);
+    assertNull(box2);
   }
 }
