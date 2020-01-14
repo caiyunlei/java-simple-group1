@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
+import com.wuhantoc.javasample.homework.Bag;
 import com.wuhantoc.javasample.homework.Box;
 import com.wuhantoc.javasample.homework.Locker;
 import com.wuhantoc.javasample.homework.Ticket;
@@ -17,7 +18,7 @@ class SimpleRobotTest {
     //given
     SimpleRobot simpleRobot = new SimpleRobot();
     simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
-    Object somethingToStore = new Object();
+    Bag somethingToStore = new Bag();
 
     //when
     Ticket ticket = simpleRobot.pickTicket(somethingToStore);
@@ -32,11 +33,11 @@ class SimpleRobotTest {
     SimpleRobot simpleRobot = new SimpleRobot();
     simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
     simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
-    simpleRobot.pickTicket(new Object());
-    simpleRobot.pickTicket(new Object());
+    simpleRobot.pickTicket(new Bag());
+    simpleRobot.pickTicket(new Bag());
 
     //when
-    Ticket ticket = simpleRobot.pickTicket(new Object());
+    Ticket ticket = simpleRobot.pickTicket(new Bag());
 
     //then
     assertNull(ticket);
@@ -47,11 +48,11 @@ class SimpleRobotTest {
     //given
     SimpleRobot simpleRobot = new SimpleRobot();
     simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
-    final Object somethingToStore = new Object();
+    final Bag somethingToStore = new Bag();
     Ticket ticket = simpleRobot.pickTicket(somethingToStore);
 
     //when
-    Object returnPackage = simpleRobot.pickPackage(ticket);
+    Bag returnPackage = simpleRobot.pickPackage(ticket);
 
     //then
     assertEquals(somethingToStore, returnPackage);
@@ -62,7 +63,7 @@ class SimpleRobotTest {
     //given
     SimpleRobot simpleRobot = new SimpleRobot();
     simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
-    simpleRobot.pickTicket(new Object());
+    simpleRobot.pickTicket(new Bag());
     Ticket wrongTicker = new Ticket(UUID.randomUUID(),0);
 
     //when
@@ -83,7 +84,7 @@ class SimpleRobotTest {
     simpleRobot.connectLocker(locker2);
 
     //when
-    final Object somethingToStore = new Object();
+    final Bag somethingToStore = new Bag();
     Ticket ticket = simpleRobot.pickTicket(somethingToStore);
 
     //then

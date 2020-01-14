@@ -11,11 +11,11 @@ class BoxTest {
     //given
     Box box = new Box(0);
     box.open();
-    final Object somethingToStore = new Object();
+    final Bag somethingToStore = new Bag();
     box.putSomething(somethingToStore);
 
     //when
-    Object storedThing = box.popStoredThing();
+    Bag storedThing = box.popStoredThing();
 
     //then
     Assertions.assertEquals(somethingToStore,storedThing);

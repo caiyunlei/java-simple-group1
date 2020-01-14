@@ -65,7 +65,7 @@ public class LockerTest {
     Locker locker = newFixedSizeLocker(1);
     Ticket correctTicket = locker.pickTicket();
     Box box = locker.findBoxById(correctTicket.getBoxId());
-    Object somethinsToStore = new Object();
+    Bag somethinsToStore = new Bag();
     box.putSomething(somethinsToStore);
 
     // when

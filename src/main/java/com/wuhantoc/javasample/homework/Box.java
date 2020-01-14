@@ -3,7 +3,7 @@ package com.wuhantoc.javasample.homework;
 public class Box {
   private boolean open = false;
   private final int id;
-  private Object somethingStored;
+  private Bag somethingStored;
 
   public Box(int id) {
     this.id = id;
@@ -25,12 +25,12 @@ public class Box {
     this.open = false;
   }
 
-  public void putSomething(Object somethingToStore) {
+  public void putSomething(Bag somethingToStore) {
     this.somethingStored = somethingToStore;
   }
 
-  public Object popStoredThing() {
-    Object storedThing = somethingStored;
+  public Bag popStoredThing() {
+    Bag storedThing = somethingStored;
     somethingStored = null;
     return storedThing;
   }

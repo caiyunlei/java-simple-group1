@@ -1,10 +1,11 @@
 package com.wuhantoc.javasample.homework.robot;
 
+import com.wuhantoc.javasample.homework.Bag;
 import com.wuhantoc.javasample.homework.Ticket;
 
 public interface LockerRobot {
 
-  Ticket pickTicket(Object somethingToStore);
+  Ticket pickTicket(Bag somethingToStore);
 
-  Object pickPackage(Ticket ticket);
+  Bag pickPackage(Ticket ticket);
 }

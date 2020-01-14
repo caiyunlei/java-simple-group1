@@ -1,5 +1,6 @@
 package com.wuhantoc.javasample.homework.robot;
 
+import com.wuhantoc.javasample.homework.Bag;
 import com.wuhantoc.javasample.homework.Locker;
 import com.wuhantoc.javasample.homework.Ticket;
 import java.util.LinkedHashSet;
@@ -19,8 +20,8 @@ public abstract class AbstractRobot implements LockerRobot{
   }
 
   @Override
-  public abstract Ticket pickTicket(Object somethingToStore);
+  public abstract Ticket pickTicket(Bag somethingToStore);
 
   @Override
-  public abstract Object pickPackage(Ticket ticket);
+  public abstract Bag pickPackage(Ticket ticket);
 }

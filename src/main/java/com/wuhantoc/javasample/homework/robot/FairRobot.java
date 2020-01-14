@@ -1,16 +1,17 @@
 package com.wuhantoc.javasample.homework.robot;
 
+import com.wuhantoc.javasample.homework.Bag;
 import com.wuhantoc.javasample.homework.Ticket;
 
 public class FairRobot extends AbstractRobot {
 
   @Override
-  public Ticket pickTicket(Object somethingToStore) {
+  public Ticket pickTicket(Bag somethingToStore) {
     return null;
   }
 
   @Override
-  public Object pickPackage(Ticket ticket) {
+  public Bag pickPackage(Ticket ticket) {
     return null;
   }
 }
