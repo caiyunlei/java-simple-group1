@@ -35,8 +35,7 @@ public class Locker {
 
     public Box openBox(Ticket ticket) {
         if (ticketBoxMap.containsKey(ticket)) {
-            final Box box = ticketBoxMap.get(ticket);
-            ticketBoxMap.remove(ticket);
+            Box box = ticketBoxMap.remove(ticket);
             box.open();
             return box;
         } else {
@@ -52,11 +51,11 @@ public class Locker {
         return ticketBoxMap.size() < boxes.size();
     }
 
-    private boolean checkBoxUnuse(Box box) {
+    private boolean checkBoxUnused(Box box) {
         return !ticketBoxMap.containsValue(box);
     }
 
     private Box selectUnusedBox() {
-        return boxes.stream().filter(this::checkBoxUnuse).findFirst().orElse(null);
+        return boxes.stream().filter(this::checkBoxUnused).findFirst().orElse(null);
     }
 }
