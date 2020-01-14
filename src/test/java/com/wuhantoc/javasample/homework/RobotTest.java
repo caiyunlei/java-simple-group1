@@ -4,19 +4,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
-class RobertTest {
+class RobotTest {
   @Test
   void should_success_when_store_package_given_empty_locker() {
     //given
-    Robert robert = new Robert();
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
+    Robot robot = new Robot();
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
     Object somethingToStore = new Object();
 
     //when
-    Ticket ticket = robert.pickTicket(somethingToStore);
+    Ticket ticket = robot.pickTicket(somethingToStore);
 
     //then
     assertNotNull(ticket);
@@ -25,14 +26,14 @@ class RobertTest {
   @Test
   void should_failed_when_store_given_all_full_locker() {
     //given
-    Robert robert = new Robert();
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
-    robert.pickTicket(new Object());
-    robert.pickTicket(new Object());
+    Robot robot = new Robot();
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
+    robot.pickTicket(new Object());
+    robot.pickTicket(new Object());
 
     //when
-    Ticket ticket = robert.pickTicket(new Object());
+    Ticket ticket = robot.pickTicket(new Object());
 
     //then
     assertNull(ticket);
@@ -41,13 +42,13 @@ class RobertTest {
   @Test
   void should_success_when_pick_given_correct_ticket() {
     //given
-    Robert robert = new Robert();
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
+    Robot robot = new Robot();
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
     final Object somethingToStore = new Object();
-    Ticket ticket = robert.pickTicket(somethingToStore);
+    Ticket ticket = robot.pickTicket(somethingToStore);
 
     //when
-    Object returnPackage = robert.pickPackage(ticket);
+    Object returnPackage = robot.pickPackage(ticket);
 
     //then
     assertEquals(somethingToStore, returnPackage);
@@ -56,13 +57,13 @@ class RobertTest {
   @Test
   void should_failed_when_pick_given_wrong_ticket() {
     //given
-    Robert robert = new Robert();
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
-    robert.pickTicket(new Object());
+    Robot robot = new Robot();
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
+    robot.pickTicket(new Object());
     Ticket wrongTicker = new Ticket(UUID.randomUUID(),0);
 
     //when
-    Object returnPackage = robert.pickPackage(wrongTicker);
+    Object returnPackage = robot.pickPackage(wrongTicker);
 
     //then
     assertNull(returnPackage);
@@ -72,14 +73,14 @@ class RobertTest {
   @Test
   void should_store_to_locker1_when_store_given_empty_locker1_and_empty_locker2() {
     //given
-    Robert robert = new Robert();
+    Robot robot = new Robot();
     final Locker locker1 = Locker.newFixedSizeLocker(1);
-    robert.connectLocker(locker1);
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
+    robot.connectLocker(locker1);
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
 
     //when
     final Object somethingToStore = new Object();
-    Ticket ticket = robert.pickTicket(somethingToStore);
+    Ticket ticket = robot.pickTicket(somethingToStore);
 
     //then
     Box box = locker1.openBox(ticket);
@@ -89,14 +90,14 @@ class RobertTest {
   @Test
   void should_not_store_to_locker2_when_store_given_empty_locker1_and_empty_locker2() {
     //given
-    Robert robert = new Robert();
-    robert.connectLocker(Locker.newFixedSizeLocker(1));
+    Robot robot = new Robot();
+    robot.connectLocker(Locker.newFixedSizeLocker(1));
     final Locker locker2 = Locker.newFixedSizeLocker(1);
-    robert.connectLocker(locker2);
+    robot.connectLocker(locker2);
 
     //when
     final Object somethingToStore = new Object();
-    Ticket ticket = robert.pickTicket(somethingToStore);
+    Ticket ticket = robot.pickTicket(somethingToStore);
 
     //then
     Box box = locker2.openBox(ticket);

@@ -3,7 +3,7 @@ package com.wuhantoc.javasample.homework;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Robert {
+public class Robot {
   private Set<Locker> controlledLockers = new LinkedHashSet<>();
 
   public void connectLocker(Locker newLocker) {
