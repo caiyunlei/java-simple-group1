@@ -43,11 +43,11 @@ public class Locker {
         }
     }
 
-    Box findBoxById(int id) {
+    public Box findBoxById(int id) {
         return boxes.stream().filter(box -> box.getId() == id).findFirst().orElse(null);
     }
 
-    boolean haveUnusedBox() {
+    public boolean haveUnusedBox() {
         return ticketBoxMap.size() < boxes.size();
     }
 

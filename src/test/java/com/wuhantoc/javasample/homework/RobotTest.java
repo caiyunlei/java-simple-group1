@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
+import com.wuhantoc.javasample.homework.robot.Robot;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
