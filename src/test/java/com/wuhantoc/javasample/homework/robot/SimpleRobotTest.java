@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-
 import com.wuhantoc.javasample.homework.Bag;
 import com.wuhantoc.javasample.homework.Box;
 import com.wuhantoc.javasample.homework.Locker;
@@ -64,7 +63,7 @@ class SimpleRobotTest {
     SimpleRobot simpleRobot = new SimpleRobot();
     simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
     simpleRobot.pickTicket(new Bag());
-    Ticket wrongTicker = new Ticket(UUID.randomUUID(),0);
+    Ticket wrongTicker = new Ticket(UUID.randomUUID(), 0);
 
     //when
     Object returnPackage = simpleRobot.pickPackage(wrongTicker);
