@@ -3,23 +3,8 @@ package com.wuhantoc.javasample.homework.robot;
 import com.wuhantoc.javasample.homework.Box;
 import com.wuhantoc.javasample.homework.Locker;
 import com.wuhantoc.javasample.homework.Ticket;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-public class SimpleRobot implements LockerRobot {
-  private Set<Locker> controlledLockers = new LinkedHashSet<>();
-
-  @Override
-  public void connectLocker(Locker newLocker) {
-    this.controlledLockers.add(newLocker);
-  }
-
-  @Override
-  public void disconnectLocker(Locker connectedLocker) {
-    if (controlledLockers.contains(connectedLocker)) {
-      this.controlledLockers.remove(connectedLocker);
-    }
-  }
+public class SimpleRobot extends AbstractRobot implements LockerRobot {
 
   @Override
   public Ticket pickTicket(Object somethingToStore){
