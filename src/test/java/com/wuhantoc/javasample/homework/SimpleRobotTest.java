@@ -5,20 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
-import com.wuhantoc.javasample.homework.robot.Robot;
+import com.wuhantoc.javasample.homework.robot.SimpleRobot;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
-class RobotTest {
+class SimpleRobotTest {
   @Test
   void should_success_when_store_package_given_empty_locker() {
     //given
-    Robot robot = new Robot();
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
+    SimpleRobot simpleRobot = new SimpleRobot();
+    simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
     Object somethingToStore = new Object();
 
     //when
-    Ticket ticket = robot.pickTicket(somethingToStore);
+    Ticket ticket = simpleRobot.pickTicket(somethingToStore);
 
     //then
     assertNotNull(ticket);
@@ -27,14 +27,14 @@ class RobotTest {
   @Test
   void should_failed_when_store_given_all_full_locker() {
     //given
-    Robot robot = new Robot();
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
-    robot.pickTicket(new Object());
-    robot.pickTicket(new Object());
+    SimpleRobot simpleRobot = new SimpleRobot();
+    simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
+    simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
+    simpleRobot.pickTicket(new Object());
+    simpleRobot.pickTicket(new Object());
 
     //when
-    Ticket ticket = robot.pickTicket(new Object());
+    Ticket ticket = simpleRobot.pickTicket(new Object());
 
     //then
     assertNull(ticket);
@@ -43,13 +43,13 @@ class RobotTest {
   @Test
   void should_success_when_pick_given_correct_ticket() {
     //given
-    Robot robot = new Robot();
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
+    SimpleRobot simpleRobot = new SimpleRobot();
+    simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
     final Object somethingToStore = new Object();
-    Ticket ticket = robot.pickTicket(somethingToStore);
+    Ticket ticket = simpleRobot.pickTicket(somethingToStore);
 
     //when
-    Object returnPackage = robot.pickPackage(ticket);
+    Object returnPackage = simpleRobot.pickPackage(ticket);
 
     //then
     assertEquals(somethingToStore, returnPackage);
@@ -58,13 +58,13 @@ class RobotTest {
   @Test
   void should_failed_when_pick_given_wrong_ticket() {
     //given
-    Robot robot = new Robot();
-    robot.connectLocker(Locker.newFixedSizeLocker(1));
-    robot.pickTicket(new Object());
+    SimpleRobot simpleRobot = new SimpleRobot();
+    simpleRobot.connectLocker(Locker.newFixedSizeLocker(1));
+    simpleRobot.pickTicket(new Object());
     Ticket wrongTicker = new Ticket(UUID.randomUUID(),0);
 
     //when
-    Object returnPackage = robot.pickPackage(wrongTicker);
+    Object returnPackage = simpleRobot.pickPackage(wrongTicker);
 
     //then
     assertNull(returnPackage);
@@ -74,15 +74,15 @@ class RobotTest {
   @Test
   void should_store_to_locker1_when_store_given_empty_locker1_and_empty_locker2() {
     //given
-    Robot robot = new Robot();
+    SimpleRobot simpleRobot = new SimpleRobot();
     final Locker locker1 = Locker.newFixedSizeLocker(1);
-    robot.connectLocker(locker1);
+    simpleRobot.connectLocker(locker1);
     final Locker locker2 = Locker.newFixedSizeLocker(1);
-    robot.connectLocker(locker2);
+    simpleRobot.connectLocker(locker2);
 
     //when
     final Object somethingToStore = new Object();
-    Ticket ticket = robot.pickTicket(somethingToStore);
+    Ticket ticket = simpleRobot.pickTicket(somethingToStore);
 
     //then
     Box box1 = locker1.openBox(ticket);

@@ -6,7 +6,7 @@ import com.wuhantoc.javasample.homework.Ticket;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Robot implements LockerRobot {
+public class SimpleRobot implements LockerRobot {
   private Set<Locker> controlledLockers = new LinkedHashSet<>();
 
   @Override
