@@ -26,6 +26,9 @@ public class Box {
   }
 
   public void putSomething(Bag somethingToStore) {
+    if (somethingToStore == null) {
+      throw new RuntimeException("");
+    }
     this.somethingStored = somethingToStore;
   }
 
