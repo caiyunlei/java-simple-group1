@@ -2,7 +2,6 @@ package com.wuhantoc.javasample.homework;
 
 import static com.wuhantoc.javasample.homework.Locker.newFixedSizeLocker;
 
-
 import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

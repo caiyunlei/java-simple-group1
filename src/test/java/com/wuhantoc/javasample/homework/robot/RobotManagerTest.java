@@ -1,11 +1,12 @@
-package com.wuhantoc.javasample.homework;
+package com.wuhantoc.javasample.homework.robot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.wuhantoc.javasample.homework.robot.FairRobot;
-import com.wuhantoc.javasample.homework.robot.SimpleRobot;
+import com.wuhantoc.javasample.homework.Bag;
+import com.wuhantoc.javasample.homework.Locker;
+import com.wuhantoc.javasample.homework.Ticket;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 

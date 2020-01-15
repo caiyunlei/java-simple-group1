@@ -1,7 +1,7 @@
-package com.wuhantoc.javasample.homework;
+package com.wuhantoc.javasample.homework.robot;
 
-import com.wuhantoc.javasample.homework.robot.LockerRobot;
-import com.wuhantoc.javasample.homework.robot.SimpleRobot;
+import com.wuhantoc.javasample.homework.Bag;
+import com.wuhantoc.javasample.homework.Ticket;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
