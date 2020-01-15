@@ -273,6 +273,7 @@ class RobotManagerTest {
     robotManager.connectLocker(emptyLocker3);
     robotManager.pickTicket(new Bag());
     robotManager.pickTicket(new Bag());
+
     final Bag somethingToStore = new Bag();
     Ticket thirdTicket = robotManager.pickTicket(somethingToStore);
 

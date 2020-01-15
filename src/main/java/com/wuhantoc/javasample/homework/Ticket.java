@@ -15,7 +15,4 @@ public class Ticket {
     return boxId;
   }
 
-  public UUID getUuid() {
-    return uuid;
-  }
 }
