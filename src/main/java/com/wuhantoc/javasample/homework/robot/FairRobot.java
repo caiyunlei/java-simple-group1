@@ -16,12 +16,7 @@ public class FairRobot extends AbstractRobot {
         .orElse(null);
   }
 
-
   private static int compare(Locker locker1, Locker locker2) {
-    if (locker1.getUsageRatio() >= locker2.getUsageRatio()) {
-      return -1;
-    } else {
-      return 1;
-    }
+    return (int) (locker1.getUsageRatio() - locker2.getUsageRatio());
   }
 }

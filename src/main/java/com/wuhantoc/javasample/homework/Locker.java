@@ -62,6 +62,10 @@ public class Locker {
     public double getUsageRatio() {
         long totalSize = boxes.size();
         long unusedBoxSize = boxes.stream().filter(this::checkBoxUnused).count();
-        return (totalSize - unusedBoxSize)/totalSize;
+        if (totalSize == 0) {
+            return 1.0d;
+        } else {
+            return (double)(totalSize - unusedBoxSize)/totalSize;
+        }
     }
 }

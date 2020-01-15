@@ -116,4 +116,15 @@ public class LockerTest {
     Assertions.assertNotNull(ticket1);
   }
 
+  @Test
+  void should_all_full_when_get_usage_ratio_given_0_size_locker() {
+    //given
+    Locker locker = newFixedSizeLocker(0);
+
+    //when
+    double usageRatio = locker.getUsageRatio();
+
+    //then
+    Assertions.assertEquals(1.0d,usageRatio);
+  }
 }
