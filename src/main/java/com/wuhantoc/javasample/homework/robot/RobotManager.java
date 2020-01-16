@@ -6,20 +6,20 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class RobotManager extends SimpleRobot {
-  private Set<LockerRobot> controlledRobots = new LinkedHashSet<>();
+  private Set<LockerRobot> connectedRobots = new LinkedHashSet<>();
 
   public void connectRobot(LockerRobot robot) {
-    controlledRobots.add(robot);
+    connectedRobots.add(robot);
   }
 
   public void disconnectRobot(LockerRobot robot) {
-    controlledRobots.remove(robot);
+    connectedRobots.remove(robot);
   }
 
   @Override
   public Ticket pickTicket(Bag somethingToStore) {
-    for (LockerRobot controlledRobot : controlledRobots) {
-      final Ticket ticket = controlledRobot.pickTicket(somethingToStore);
+    for (LockerRobot connectedRobot : connectedRobots) {
+      final Ticket ticket = connectedRobot.pickTicket(somethingToStore);
       if (ticket != null) {
         return ticket;
       }
@@ -29,8 +29,8 @@ public class RobotManager extends SimpleRobot {
 
   @Override
   public Bag pickPackage(Ticket ticket) {
-    for (LockerRobot controlledRobot : controlledRobots) {
-      final Bag bag = controlledRobot.pickPackage(ticket);
+    for (LockerRobot connectedRobot : connectedRobots) {
+      final Bag bag = connectedRobot.pickPackage(ticket);
       if (bag != null) {
         return bag;
       }

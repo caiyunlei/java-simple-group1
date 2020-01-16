@@ -8,15 +8,15 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public abstract class AbstractRobot implements LockerRobot{
-  protected Set<Locker> controlledLockers = new LinkedHashSet<>();
+  protected Set<Locker> connectedLockers = new LinkedHashSet<>();
 
   public void connectLocker(Locker newLocker) {
-    this.controlledLockers.add(newLocker);
+    this.connectedLockers.add(newLocker);
   }
 
   public void disconnectLocker(Locker connectedLocker) {
-    if (controlledLockers.contains(connectedLocker)) {
-      this.controlledLockers.remove(connectedLocker);
+    if (connectedLockers.contains(connectedLocker)) {
+      this.connectedLockers.remove(connectedLocker);
     }
   }
 
@@ -35,8 +35,8 @@ public abstract class AbstractRobot implements LockerRobot{
 
   @Override
   public Bag pickPackage(Ticket ticket) {
-    for (Locker controlledLocker : controlledLockers) {
-      Box box = controlledLocker.openBox(ticket);
+    for (Locker connectedLocker : connectedLockers) {
+      Box box = connectedLocker.openBox(ticket);
       if (box != null) {
         return box.popStoredThing();
       }

@@ -10,7 +10,7 @@ public class FairRobot extends AbstractRobot {
   }
 
   private Locker findLowestUsageLocker() {
-    return controlledLockers.stream()
+    return connectedLockers.stream()
         .filter(Locker::haveUnusedBox)
         .min(FairRobot::compare)
         .orElse(null);
