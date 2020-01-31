@@ -5,76 +5,93 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.wuhantoc.javasample.homework.Bag;
+import com.wuhantoc.javasample.homework.Box;
 import com.wuhantoc.javasample.homework.Locker;
 import com.wuhantoc.javasample.homework.Ticket;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class RobotManagerTest {
   @Test
-  void should_success_when_save_package_given_robot_manager_and_simple_robot_and_empty_locker() {
+  void should_success_when_save_package_given_robot_manager_and_available_robot() {
     //given
-    Locker emptyLocker = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker);
+    Bag bag = new Bag();
+    LockerRobot lockerRobot = Mockito.mock(LockerRobot.class);
+    final Ticket mockTicket = new Ticket(UUID.randomUUID(), 0);
+    Mockito.when(lockerRobot.pickTicket(bag)).thenReturn(mockTicket);
 
     RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(simpleRobot);
+    robotManager.connectRobot(lockerRobot);
 
     //when
-    Ticket ticket = robotManager.pickTicket(new Bag());
+    Ticket ticket = robotManager.pickTicket(bag);
+
+    //then
+    assertEquals(mockTicket,ticket);
+  }
+
+  @Test
+  void should_failed_when_save_package_given_robot_manager_and_unavailable_robot() {
+    //given
+    Bag bag = new Bag();
+    LockerRobot lockerRobot = Mockito.mock(LockerRobot.class);
+    Mockito.when(lockerRobot.pickTicket(bag)).thenReturn(null);
+
+    RobotManager robotManager = new RobotManager();
+    robotManager.connectRobot(lockerRobot);
+
+    //when
+    Ticket ticket = robotManager.pickTicket(bag);
+
+    //then
+    assertNull(ticket);
+  }
+
+  @Test
+  void should_success_when_save_package_given_robot_manager_and_two_available_robot() {
+    //given
+    Bag firstBag = new Bag();
+    Bag secondBag = new Bag();
+    LockerRobot firstRobot = Mockito.mock(LockerRobot.class);
+    LockerRobot secondRobot = Mockito.mock(LockerRobot.class);
+    final Ticket mockTicket = new Ticket(UUID.randomUUID(), 0);
+    Mockito.when(secondRobot.pickTicket(secondBag)).thenReturn(mockTicket);
+
+    RobotManager robotManager = new RobotManager();
+    robotManager.connectRobot(firstRobot);
+    robotManager.connectRobot(secondRobot);
+
+    //when
+    robotManager.pickTicket(firstBag);
+    Ticket ticket = robotManager.pickTicket(secondBag);
+
+    //then
+    assertEquals(mockTicket,ticket);
+  }
+
+  @Test
+  void should_success_when_store_package_given_empty_locker() {
+    //given
+    RobotManager robotManager = new RobotManager();
+    robotManager.connectLocker(Locker.newFixedSizeLocker(1));
+    Bag somethingToStore = new Bag();
+
+    //when
+    Ticket ticket = robotManager.pickTicket(somethingToStore);
 
     //then
     assertNotNull(ticket);
   }
 
   @Test
-  void should_save_to_locker_when_save_package_given_robot_manager_and_fair_robot_and_empty_locker() {
+  void should_failed_when_store_given_all_full_locker() {
     //given
-    Locker emptyLocker = Locker.newFixedSizeLocker(1);
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(emptyLocker);
-
     RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-
-    //when
-    Ticket ticket = robotManager.pickTicket(new Bag());
-
-    //then
-    assertNotNull(ticket);
-  }
-
-  @Test
-  void should_success_when_save_package_given_robot_manager_and_fair_robot_and_simple_robot_and_empty_locker() {
-    //given
-    Locker emptyLocker = Locker.newFixedSizeLocker(1);
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(emptyLocker);
-
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker);
-
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-    robotManager.connectRobot(simpleRobot);
-
-    //when
-    Ticket ticket = robotManager.pickTicket(new Bag());
-
-    //then
-    assertNotNull(ticket);
-  }
-
-  @Test
-  void should_failed_when_save_package_given_robot_manager_and_simple_robot_and_full_locker() {
-    //given
-    Locker fullLocker = createFullLocker();
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(fullLocker);
-
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(simpleRobot);
+    robotManager.connectLocker(Locker.newFixedSizeLocker(1));
+    robotManager.connectLocker(Locker.newFixedSizeLocker(1));
+    robotManager.pickTicket(new Bag());
+    robotManager.pickTicket(new Bag());
 
     //when
     Ticket ticket = robotManager.pickTicket(new Bag());
@@ -84,210 +101,53 @@ class RobotManagerTest {
   }
 
   @Test
-  void should_failed_when_save_package_given_robot_manager_and_fair_robot_and_full_locker() {
+  void should_success_when_pick_given_correct_ticket() {
     //given
-    Locker fullLocker = createFullLocker();
-
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(fullLocker);
-
     RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-
-    //when
-    Ticket ticket = robotManager.pickTicket(new Bag());
-
-    //then
-    assertNull(ticket);
-  }
-
-  @Test
-  void should_failed_when_save_package_given_robot_manager_and_simple_robor_and_simple_robot_and_full_locker() {
-    //given
-    Locker fullLocker = createFullLocker();
-
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(fullLocker);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(fullLocker);
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-    robotManager.connectRobot(fairRobot);
-
-    //when
-    Ticket ticket = robotManager.pickTicket(new Bag());
-
-    //then
-    assertNull(ticket);
-  }
-
-  @Test
-  void should_get_bag_when_pick_package_given_right_ticket() {
-    //given
-    Locker emptyLocker = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker);
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(simpleRobot);
+    robotManager.connectLocker(Locker.newFixedSizeLocker(1));
     final Bag somethingToStore = new Bag();
     Ticket ticket = robotManager.pickTicket(somethingToStore);
 
     //when
-    Bag returnBag = robotManager.pickPackage(ticket);
+    Bag returnPackage = robotManager.pickPackage(ticket);
 
     //then
-    assertEquals(somethingToStore,returnBag);
+    assertEquals(somethingToStore, returnPackage);
   }
 
   @Test
-  void should_failed_when_pick_package_given_used_ticket() {
+  void should_failed_when_pick_given_wrong_ticket() {
     //given
-    Locker emptyLocker = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker);
     RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(simpleRobot);
+    robotManager.connectLocker(Locker.newFixedSizeLocker(1));
+    robotManager.pickTicket(new Bag());
+    Ticket wrongTicker = new Ticket(UUID.randomUUID(), 0);
+
+    //when
+    Object returnPackage = robotManager.pickPackage(wrongTicker);
+
+    //then
+    assertNull(returnPackage);
+  }
+
+  @Test
+  void should_store_to_locker1_when_store_given_empty_locker1_and_empty_locker2() {
+    //given
+    RobotManager robotManager = new RobotManager();
+    final Locker locker1 = Locker.newFixedSizeLocker(1);
+    robotManager.connectLocker(locker1);
+    final Locker locker2 = Locker.newFixedSizeLocker(1);
+    robotManager.connectLocker(locker2);
+
+    //when
     final Bag somethingToStore = new Bag();
     Ticket ticket = robotManager.pickTicket(somethingToStore);
-    robotManager.pickPackage(ticket);
-
-    //when
-    Bag returnBag = robotManager.pickPackage(ticket);
 
     //then
-    assertNull(returnBag);
-  }
+    Box box1 = locker1.openBox(ticket);
+    assertNotNull(box1);
 
-  @Test
-  void should_failed_when_pick_package_given_fake_ticket() {
-    //given
-    Locker emptyLocker = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker);
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(simpleRobot);
-    final Bag somethingToStore = new Bag();
-    robotManager.pickTicket(somethingToStore);
-
-    //when
-    Bag returnBag = robotManager.pickPackage(new Ticket(UUID.randomUUID(),0));
-
-    //then
-    assertNull(returnBag);
-  }
-
-  @Test
-  void should_get_bag_from_manager_when_save_package_given_ticket_from_second_save_package() {
-    //given
-    Locker emptyLocker1 = Locker.newFixedSizeLocker(1);
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(emptyLocker1);
-
-    Locker emptyLocker2 = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker2);
-
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-    robotManager.connectRobot(simpleRobot);
-    robotManager.pickTicket(new Bag());
-    final Bag somethingToStore = new Bag();
-    Ticket secondTicket = robotManager.pickTicket(somethingToStore);
-
-    //when
-    Bag returnBag = robotManager.pickPackage(secondTicket);
-
-    //then
-    assertEquals(somethingToStore, returnBag);
-  }
-
-  @Test
-  void should_get_bag_from_second_robot_when_save_package_given_ticket_from_second_save_package() {
-    //given
-    Locker emptyLocker1 = Locker.newFixedSizeLocker(1);
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(emptyLocker1);
-
-    Locker emptyLocker2 = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker2);
-
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-    robotManager.connectRobot(simpleRobot);
-    robotManager.pickTicket(new Bag());
-    final Bag somethingToStore = new Bag();
-    Ticket secondTicket = robotManager.pickTicket(somethingToStore);
-
-    //when
-    Bag returnBag = simpleRobot.pickPackage(secondTicket);
-
-    //then
-    assertEquals(somethingToStore, returnBag);
-  }
-
-  @Test
-  void should_get_bag_from_manager_when_save_package_given_ticket_from_third_save_package() {
-    //given
-    Locker emptyLocker1 = Locker.newFixedSizeLocker(1);
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(emptyLocker1);
-
-    Locker emptyLocker2 = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker2);
-
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-    robotManager.connectRobot(simpleRobot);
-
-    Locker emptyLocker3 = Locker.newFixedSizeLocker(1);
-    robotManager.connectLocker(emptyLocker3);
-    robotManager.pickTicket(new Bag());
-    robotManager.pickTicket(new Bag());
-    final Bag somethingToStore = new Bag();
-    Ticket thirdTicket = robotManager.pickTicket(somethingToStore);
-
-    //when
-    Bag returnBag = robotManager.pickPackage(thirdTicket);
-
-    //then
-    assertEquals(somethingToStore, returnBag);
-  }
-
-  @Test
-  void should_get_bag_from_locker3_when_save_package_given_ticket_from_third_save_package() {
-    //given
-    Locker emptyLocker1 = Locker.newFixedSizeLocker(1);
-    FairRobot fairRobot = new FairRobot();
-    fairRobot.connectLocker(emptyLocker1);
-
-    Locker emptyLocker2 = Locker.newFixedSizeLocker(1);
-    SimpleRobot simpleRobot = new SimpleRobot();
-    simpleRobot.connectLocker(emptyLocker2);
-
-    RobotManager robotManager = new RobotManager();
-    robotManager.connectRobot(fairRobot);
-    robotManager.connectRobot(simpleRobot);
-
-    Locker emptyLocker3 = Locker.newFixedSizeLocker(1);
-    robotManager.connectLocker(emptyLocker3);
-    robotManager.pickTicket(new Bag());
-    robotManager.pickTicket(new Bag());
-
-    final Bag somethingToStore = new Bag();
-    Ticket thirdTicket = robotManager.pickTicket(somethingToStore);
-
-    //when
-    Bag returnBag = emptyLocker3.openBox(thirdTicket).popStoredThing();
-
-    //then
-    assertEquals(somethingToStore, returnBag);
-  }
-
-  private Locker createFullLocker() {
-    Locker locker = Locker.newFixedSizeLocker(1);
-    locker.pickTicket();
-    return locker;
+    Box box2 = locker2.openBox(ticket);
+    assertNull(box2);
   }
 }

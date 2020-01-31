@@ -1,11 +1,12 @@
 package com.wuhantoc.javasample.homework.robot;
 
 import com.wuhantoc.javasample.homework.Bag;
+import com.wuhantoc.javasample.homework.Locker;
 import com.wuhantoc.javasample.homework.Ticket;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class RobotManager extends SimpleRobot {
+public class RobotManager extends AbstractRobot {
   private Set<LockerRobot> connectedRobots = new LinkedHashSet<>();
 
   public void connectRobot(LockerRobot robot) {
@@ -36,6 +37,14 @@ public class RobotManager extends SimpleRobot {
       }
     }
     return super.pickPackage(ticket);
+  }
+
+  protected Locker findLockerToSave() {
+    /*
+    * duplicated with com.wuhantoc.javasample.homework.robot.SimpleRobot.findLockerToSave
+    * the duplicated code should be removed?
+    * */
+    return connectedLockers.stream().filter(Locker::haveUnusedBox).findFirst().orElse(null);
   }
 
 }
