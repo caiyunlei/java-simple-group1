@@ -40,6 +40,10 @@ public class RobotManager extends AbstractRobot {
   }
 
   protected Locker findLockerToSave() {
+    /*
+    * duplicated with com.wuhantoc.javasample.homework.robot.SimpleRobot.findLockerToSave
+    * the duplicated code should be removed?
+    * */
     return connectedLockers.stream().filter(Locker::haveUnusedBox).findFirst().orElse(null);
   }
 
